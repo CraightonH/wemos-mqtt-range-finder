@@ -76,7 +76,7 @@ void loop(void) {
   }
   client.loop();
   Serial.println("working");
-  long duration, distance, prev_distance, difference;
+  long duration, distance;
   digitalWrite(TRIGPIN, LOW);
   delayMicroseconds(2);
   digitalWrite(TRIGPIN, HIGH);
@@ -84,9 +84,5 @@ void loop(void) {
   digitalWrite(TRIGPIN, LOW);
   duration = pulseIn(ECHOPIN, HIGH);
   distance = (duration/2) * SPEED_OF_SOUND;
-  difference = distance - prev_distance;
-  if (abs(difference) > 1) {
-    pubDistance(String(distance));
-  }
-  prev_distance = distance;
+  pubDistance(String(distance));
 }
