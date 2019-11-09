@@ -12,7 +12,7 @@ const char* logInfoTopic = "/log/info";
 int timer = 0;
 
 WiFiClient wifiClient;
-PubSubClient client("10.37.39.155", 1883, wifiClient);
+PubSubClient client("192.168.1.239", 1883, wifiClient);
 
 void findKnownWiFiNetworks() {
   ESP8266WiFiMulti wifiMulti;
@@ -46,7 +46,7 @@ void pubDebug(String message) {
 
 void reconnectMQTT() {
   while(!client.connected()) {
-    if (client.connect((char*) devID.c_str())) {
+    if (client.connect((char*) devID.c_str(), "mqtt", "mymqttpassword")) {
       Serial.println("Connected to MQTT server");
       String message = devID;
       message += ": ";
