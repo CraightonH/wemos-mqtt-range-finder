@@ -44,6 +44,10 @@ void pubDebug(String message) {
   client.publish("/log/debug", message.c_str());
 }
 
+void sendHassDeviceConfig() {
+  client.publish("homeassistant/sensor/garage/park_distance/config", "{\"name\": \"Garage Park Distance\", \"state_topic\": \"/garage/park/distance\"}");
+}
+
 void reconnectMQTT() {
   while(!client.connected()) {
     if (client.connect((char*) devID.c_str(), "mqtt", "mymqttpassword")) {
@@ -56,6 +60,7 @@ void reconnectMQTT() {
       } else {
         Serial.println("failed to publish");
       }
+      sendHassDeviceConfig();
     } else {
       Serial.println("MQTT connection failed");
       delay(5000);
